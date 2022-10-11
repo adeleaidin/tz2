@@ -20,6 +20,4 @@ jobs:
       - name: Install unittest tests
         run: |
           python3 -m unittest tests
-      - name: Run tests.py
-        run: |
-          unittest tests.py
+ 
