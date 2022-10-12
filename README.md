@@ -11,4 +11,4 @@
 
 
 Status of last Deployment:<br>
-<img src='https://github.com/adeleaidin/tz2/workflows//badge.svg?branch=master'><br>
+<img src='https://github.com/adeleaidin/tz2/workflows/CI/badge.svg?branch=master'><br>
