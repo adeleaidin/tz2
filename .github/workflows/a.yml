@@ -1,0 +1,48 @@
+name: a
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  on_build_actions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: cd $GITHUB_WORKSPACE
+
+      - name: Run Tests
+        run: python -m unittest discover -v . "Test_Programm1.py"
+
+      - name: works
+        if: ${{success()}}
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            ${{ github.actor }} created commit:
+            Commit message: ${{ github.event.commits[0].message }}
+            все ок
+
+
+            Repository: ${{ github.repository }}
+
+            See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
+      - name: fails
+        if: ${{failure()}}
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            ${{ github.actor }} created commit:
+            Commit message: ${{ github.event.commits[0].message }}
+            какой-то тест не работает
+
+            Repository: ${{ github.repository }}
+
+            See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
